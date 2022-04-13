@@ -1,0 +1,24 @@
+
+<div>
+  <label for="inputWord">Input 5 letter word: </label>
+  <input id="inputWord" [(ngModel)]="inputWord" placeholder="input">
+  <button (click)="onClickEnterWord()">Submit</button>
+  <section *ngIf="isSubmitted"  >
+    <div *ngFor="let number of [0,1,2,3,4]">
+      <div>
+        Is {{inputWord.charAt(number)}} green(1), yellow(2), or black(3)?
+        <input id="inputWord" [(ngModel)]="inputWordColor[number]" placeholder="1/2/3">
+      </div>
+    </div>
+    <button (click)="onClickEnterColor()">Submit</button>
+  </section>
+</div>
+
+
+<h2>Possible Words</h2>
+<ul class="possibleWords">
+  <span *ngIf = "possibleWords">PossibleWords length : {{possibleWords.length}}<br></span>
+  <span *ngFor="let word of possibleWords">
+    {{word}}
+</span>
+</ul>
