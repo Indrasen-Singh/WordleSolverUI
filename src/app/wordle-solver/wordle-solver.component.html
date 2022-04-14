@@ -1,12 +1,20 @@
+<div *ngFor="let enteredWord of inputWords">
+  <div>
+    {{ enteredWord }}
+  </div>
+</div>
 
 <div>
-  <label for="inputWord">Input 5 letter word: </label>
-  <input id="inputWord" [(ngModel)]="inputWord" placeholder="input">
+  <label for="inputWord">Enter valid 5 letter word: </label>
+  <input id="inputWord" [(ngModel)]="inputWord" placeholder="input" type="text" maxlength="5" required minlength="5" (keyup)="keyPressAlphabets($event)">
   <button (click)="onClickEnterWord()">Submit</button>
+  <section *ngIf="errorMessage">
+    <p>{{ errorMessage }}</p>
+  </section>
   <section *ngIf="isSubmitted"  >
     <div *ngFor="let number of [0,1,2,3,4]">
       <div>
-        Is {{inputWord.charAt(number)}} green(1), yellow(2), or black(3)?
+        Is <b>{{inputWord.charAt(number)}}</b> green(1), yellow(2), or black(3)?
         <input id="inputWord" [(ngModel)]="inputWordColor[number]" placeholder="1/2/3">
       </div>
     </div>

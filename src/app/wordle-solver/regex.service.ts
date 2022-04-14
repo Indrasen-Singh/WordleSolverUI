@@ -1,17 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { WordList } from './Constants';
+import { Injectable } from '@angular/core';
 
-@Component({
-  selector: 'app-wordle-solver',
-  templateUrl: './wordle-solver.component.html',
-  styleUrls: ['./wordle-solver.component.css']
+@Injectable({
+  providedIn: 'root'
 })
-export class WordleSolverComponent implements OnInit {
-  inputWords : string[] = [];
+export class RegexService {
   inputWord = "";
   inputWordColor: number[] = [];
-  isSubmitted: boolean = false;
-  errorMessage: string = "";
+  isSubmitted : boolean = false;
 
   possibleWords: string[] = [];
   a_z: string = "abcdefghijklmnopqrstuvwxyz";
@@ -26,50 +21,7 @@ export class WordleSolverComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-    this.possibleWords = WordList;
-
-    for (let i = 0; i < 5; i++) {
-      this.listOfLists.push(this.a_z)
-    }
-  }
-
-  keyPressAlphabets(event: any) {
-    this.isSubmitted = false;
-    var pattern = /[a-zA-Z]/;
-    var inputChar = String.fromCharCode(event.charCode);
-    if (event.keyCode != 8 && !pattern.test(inputChar)) {
-      event.preventDefault();
-    }
-    // if enter is pressed then submit the form
-    if (event.keyCode == 13) {
-      this.onClickEnterWord();
-    }
-  }
-
-  onClickEnterWord(): void {
-    this.inputWord = this.inputWord.toLowerCase();
-    if (this.inputWord.length != 5) {
-      this.errorMessage = "Please enter a word of length 5";
-      this.isSubmitted = false;
-    }
-    else if (!this.inputWord.match(this.inputValidation)) {
-      this.errorMessage = "Please enter a word with only alphabets";
-      this.isSubmitted = false;
-    }
-    else if (WordList.indexOf(this.inputWord) == -1) {
-      this.errorMessage = "Please enter a valid word";
-      this.isSubmitted = false;
-    }
-    else {
-      this.errorMessage = ''
-      this.isSubmitted = true;
-    }
-  }
-
-  onClickEnterColor(): void {
-    let enteredWord = this.inputWord;
-    this.inputWords.push(enteredWord);
+  onClickEnterColor(enteredWord : string): void {
     for (let i = 0; i < 5; i++){
       var c = enteredWord.charAt(i);
       if (this.inputWordColor[i] == 1) {
@@ -116,5 +68,4 @@ export class WordleSolverComponent implements OnInit {
     this.isSubmitted = false;
     this.inputWordColor = [];
   }
-
 }
