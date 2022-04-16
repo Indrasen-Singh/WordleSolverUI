@@ -1,32 +1,57 @@
-<div *ngFor="let enteredWord of inputWords">
-  <div>
-    {{ enteredWord }}
-  </div>
-</div>
+<ul>
+  <li *ngFor="let enteredWord of inputWords; let i = index" [attr.data-index]="i">
+    <span *ngFor="let char of enteredWord.split(''); let j= index" [attr.data-index]="j">
+      <span *ngIf="inputWordColors[i][j] === 1">
+        <button type="button" class="btn btn-success"> {{char}}</button>
+      </span>
+
+      <span *ngIf="inputWordColors[i][j] === 2">
+        <button type="button" class="btn btn-warning"> {{char}}</button>
+      </span>
+
+      <span *ngIf="inputWordColors[i][j] === 3">
+        <button type="button" class="btn btn-dark"> {{char}}</button>
+      </span>
+
+      <span *ngIf="inputWordColors[i][j] === -1">
+        <button type="button" class="btn btn-light"> {{char}}</button>
+      </span>
+    </span>
+  </li>
+</ul>
 
 <div>
   <label for="inputWord">Enter valid 5 letter word: </label>
-  <input id="inputWord" [(ngModel)]="inputWord" placeholder="input" type="text" maxlength="5" required minlength="5" (keyup)="keyPressAlphabets($event)">
+  <input id="inputWord" [(ngModel)]="inputWord" placeholder="input" type="text" maxlength="5" required minlength="5"
+    (keyup)="keyPressAlphabets($event)">
   <button (click)="onClickEnterWord()">Submit</button>
   <section *ngIf="errorMessage">
     <p>{{ errorMessage }}</p>
   </section>
-  <section *ngIf="isSubmitted"  >
+  <section *ngIf="isSubmitted">
     <div *ngFor="let number of [0,1,2,3,4]">
       <div>
-        Is <b>{{inputWord.charAt(number)}}</b> green(1), yellow(2), or black(3)?
-        <input id="inputWord" [(ngModel)]="inputWordColor[number]" placeholder="1/2/3">
+        Is <b>{{inputWord.charAt(number)}}</b>
+        <!-- <input id="inputWord" [(ngModel)]="inputWordColor[number]" placeholder="1/2/3"> -->
+        <button type="button" class="btn btn-success" (click)="onColorSelection(number,1)"> </button>
+        <button type="button" class="btn btn-warning" (click)="onColorSelection(number,2)"> </button>
+        <button type="button" class="btn btn-dark" (click)="onColorSelection(number,3)"> </button>
+        ?
+        <span *ngIf="inputWordColor[number] === 1">Green</span>
+        <span *ngIf="inputWordColor[number] === 2">Yellow</span>
+        <span *ngIf="inputWordColor[number] === 3">Black</span>
       </div>
     </div>
     <button (click)="onClickEnterColor()">Submit</button>
   </section>
 </div>
 
-
-<h2>Possible Words</h2>
-<ul class="possibleWords">
-  <span *ngIf = "possibleWords">PossibleWords length : {{possibleWords.length}}<br></span>
-  <span *ngFor="let word of possibleWords">
-    {{word}}
+<span *ngIf="possibleWords && inputWords.length != 0 ">
+  <h2>Possible Words</h2>
+  <ul class="possibleWords">
+    PossibleWords length : {{possibleWords.length}}<br>
+    <span *ngFor="let word of possibleWords">
+      {{word}}
+    </span>
+  </ul>
 </span>
-</ul>

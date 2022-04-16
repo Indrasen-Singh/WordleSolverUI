@@ -8,8 +8,11 @@ import { WordList } from './Constants';
 })
 export class WordleSolverComponent implements OnInit {
   inputWords : string[] = [];
-  inputWord = "";
-  inputWordColor: number[] = [];
+  inputWord = "WATER";
+  // create inputWordColor array of length 5
+  inputWordColors : any = [];
+  inputWordColor: number[] = Array(5).fill(-1);
+
   isSubmitted: boolean = false;
   errorMessage: string = "";
 
@@ -67,9 +70,22 @@ export class WordleSolverComponent implements OnInit {
     }
   }
 
+  onColorSelection(index: number, color: number): void {
+    this.inputWordColor[index] = color;
+  }
+
   onClickEnterColor(): void {
+    for (let i = 0; i < 5; i++) {
+      if(this.inputWordColor[i] == -1) {
+        this.errorMessage = "Please select a color for each letter";
+        this.isSubmitted = false;
+        return;
+      }
+    }
+
     let enteredWord = this.inputWord;
     this.inputWords.push(enteredWord);
+    this.inputWordColors.push(this.inputWordColor);
     for (let i = 0; i < 5; i++){
       var c = enteredWord.charAt(i);
       if (this.inputWordColor[i] == 1) {
@@ -114,7 +130,7 @@ export class WordleSolverComponent implements OnInit {
 
     this.inputWord = ''
     this.isSubmitted = false;
-    this.inputWordColor = [];
+    this.inputWordColor = Array(5).fill(-1);
   }
 
 }
