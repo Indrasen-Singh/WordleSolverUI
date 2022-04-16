@@ -8,7 +8,7 @@ import { WordList } from './Constants';
 })
 export class WordleSolverComponent implements OnInit {
   inputWords : string[] = [];
-  inputWord = "WATER";
+  inputWord = "";
   // create inputWordColor array of length 5
   inputWordColors : any = [];
   inputWordColor: number[] = Array(5).fill(-1);
