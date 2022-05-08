@@ -30,11 +30,14 @@ export class WordleSolverComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.possibleWords = WordList;
 
     for (let i = 0; i < 5; i++) {
       this.listOfLists.push(this.a_z)
     }
+  }
+
+  ngAfterContentInit(): void {
+    this.possibleWords = WordList;
   }
 
   keyPressAlphabets(event: any) {
